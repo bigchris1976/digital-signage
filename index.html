@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Digital Signage</title>
+
+<meta http-equiv="refresh" content="300">
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI, Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    overflow:hidden;
+}
+
+.container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+}
+
+h1{
+    font-size:4rem;
+    margin-bottom:10px;
+}
+
+.clock{
+    font-size:3rem;
+    color:#38bdf8;
+    margin-bottom:30px;
+}
+
+.slide{
+    font-size:2rem;
+    max-width:80%;
+    padding:20px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.1);
+}
+
+.footer{
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    text-align:center;
+    font-size:1.2rem;
+    color:#94a3b8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Welcome</h1>
+
+    <div class="clock" id="clock"></div>
+
+    <div class="slide" id="announcement">
+        Loading...
+    </div>
+
+</div>
+
+<div class="footer">
+    Company Digital Signage
+</div>
+
+<script>
+
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById('clock').innerHTML =
+        now.toLocaleDateString() +
+        "<br>" +
+        now.toLocaleTimeString();
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+const messages = [
+
+    "Welcome to our facility",
+
+    "Remember to practice workplace safety",
+
+    "IT Support Portal Available 24/7",
+
+    "Check SharePoint for company announcements",
+
+    "Have a great day!"
+
+];
+
+let current = 0;
+
+function rotateMessages() {
+
+    document.getElementById("announcement").innerText =
+        messages[current];
+
+    current++;
+
+    if(current >= messages.length){
+        current = 0;
+    }
+}
+
+rotateMessages();
+setInterval(rotateMessages,10000);
+
+</script>
+
+</body>
+</html>
