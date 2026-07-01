@@ -3,121 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Digital Signage</title>
-
-<meta http-equiv="refresh" content="300">
+<title>Digital Signage Board</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Segoe UI, Arial, sans-serif;
-    background:#0f172a;
-    color:white;
-    overflow:hidden;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    text-align:center;
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    overflow: hidden;
 }
 
-h1{
-    font-size:4rem;
-    margin-bottom:10px;
+.slide {
+    display: none;
+    height: 100vh;
+    padding: 50px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.clock{
-    font-size:3rem;
-    color:#38bdf8;
-    margin-bottom:30px;
+.slide.active {
+    display: flex;
 }
 
-.slide{
-    font-size:2rem;
-    max-width:80%;
-    padding:20px;
-    border-radius:15px;
-    background:rgba(255,255,255,0.1);
+.slide h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
 }
 
-.footer{
-    position:absolute;
-    bottom:20px;
-    width:100%;
-    text-align:center;
-    font-size:1.2rem;
-    color:#94a3b8;
+.slide p {
+    font-size: 2rem;
+}
+
+.slide1 {
+    background: #1e3a8a;
+}
+
+.slide2 {
+    background: #065f46;
+}
+
+.slide3 {
+    background: #7c2d12;
+}
+
+.slide4 {
+    background: #581c87;
+}
+
+.clock {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="clock" id="clock"></div>
 
+<div class="slide slide1 active">
     <h1>Welcome</h1>
-
-    <div class="clock" id="clock"></div>
-
-    <div class="slide" id="announcement">
-        Loading...
-    </div>
-
+    <p>Company Digital Signage Board</p>
 </div>
 
-<div class="footer">
-    Company Digital Signage
+<div class="slide slide2">
+    <h1>Announcements</h1>
+    <p>Submit timesheets by Friday.</p>
+</div>
+
+<div class="slide slide3">
+    <h1>Safety Message</h1>
+    <p>Report hazards immediately.</p>
+</div>
+
+<div class="slide slide4">
+    <h1>IT Help Desk</h1>
+    <p>Open a ticket through the service portal.</p>
 </div>
 
 <script>
 
+// Live Clock
 function updateClock() {
-    const now = new Date();
-
     document.getElementById('clock').innerHTML =
-        now.toLocaleDateString() +
-        "<br>" +
-        now.toLocaleTimeString();
+        new Date().toLocaleString();
 }
 
-setInterval(updateClock,1000);
+setInterval(updateClock, 1000);
 updateClock();
 
-const messages = [
+// Slide Rotation Every 7 Seconds
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
 
-    "Welcome to our facility",
+function showNextSlide() {
 
-    "Remember to practice workplace safety",
+    slides[currentSlide].classList.remove('active');
 
-    "IT Support Portal Available 24/7",
+    currentSlide++;
 
-    "Check SharePoint for company announcements",
-
-    "Have a great day!"
-
-];
-
-let current = 0;
-
-function rotateMessages() {
-
-    document.getElementById("announcement").innerText =
-        messages[current];
-
-    current++;
-
-    if(current >= messages.length){
-        current = 0;
+    if (currentSlide >= slides.length) {
+        currentSlide = 0;
     }
+
+    slides[currentSlide].classList.add('active');
 }
 
-rotateMessages();
-setInterval(rotateMessages,10000);
+setInterval(showNextSlide, 7000);
 
 </script>
 
