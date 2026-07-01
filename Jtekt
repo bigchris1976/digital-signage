@@ -1,0 +1,7 @@
+digital-signage/
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── signage.js
+└── images/
